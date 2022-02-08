@@ -11,13 +11,6 @@ typedef struct sem {
 }Semaine;
 
 
-typedef struct action {
-    char jourheure[3];
-    char action[10];
-
-    struct action *suiv;
-}Action,*Listeaction; 
-
 Listesem ListesemInit(void);
 
 Listesem Insertion(Listesem)
