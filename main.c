@@ -1,14 +1,12 @@
 #include "semaine.h"
-
-
 int main()
 {
-    Listeaction_t listeact;
-    FILE        * file;
-    char          anneesemaine[7];
-    Action_t      siuu;
+    Listesem_t          listesem;
+    Action_t            siuu;
+    Semaine_t           sem;
 
-    listeact = InitialisationAction();
+    FILE              * file;
+    listesem = InitialisationSemaine();
     file = fopen("action.txt","r");
     if (file == NULL)
     {
@@ -18,13 +16,13 @@ int main()
     {
         while(!feof(file))
         {
-            fscanf(file,"%6s %3s %[^\n]%*c",anneesemaine,siuu.jourheure,siuu.action);
-            listeact = InsertionAction(siuu,listeact);
+            fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine,siuu.jourheure,siuu.action);
+            (sem.act)->action=siuu;
+            listesem = InsertionSemaine(sem,listesem);
         }
     }
 
-    AfficherListeAction(listeact);
+    AfficherListeSemaine(listesem);
 
     return 0;
 }
-

@@ -1,4 +1,4 @@
-#include "semaine.h"
+#include"semaine.h"
 
 /* -------------------------------------------------------------------- */
 /* InitialisationSsemaine: initialisation de la liste des années et     */
@@ -20,11 +20,11 @@ Listesem_t InitialisationSemaine (void){
 /* En sortie: Renvoie 1 si la liste est vide sinon 0.                   */
 /* -------------------------------------------------------------------- */
 
-Booleen_t ListeSemaineVide(Listesem_t liste) 
+Booleen_t ListeSemaineVide(Listesem_t listesem)
 {
-    Booleen_t result = faux; 
+    Booleen_t result = faux;
 
-    if (liste==NULL)
+    if (listesem==NULL)
     {
         result=vrai;
     }
@@ -39,7 +39,7 @@ Booleen_t ListeSemaineVide(Listesem_t liste)
 /* En sortie: Renvoie 1 si la liste est vide sinon 0.                   */
 /* -------------------------------------------------------------------- */
 
-Listesem_t InsertionenteteSem(Semaine_t Sem,Listesem_t Listesem) 
+Listesem_t InsertionenteteSem(Semaine_t Sem,Listesem_t Listesem)
 {
     Maillonsem_t *m;
     m=(Maillonsem_t*)malloc(sizeof(Maillonsem_t*));
@@ -51,9 +51,9 @@ Listesem_t InsertionenteteSem(Semaine_t Sem,Listesem_t Listesem)
         exit(1);
     }
     m->semaine=Sem;
-    m->suiv= Listesem; 
+    m->suiv= Listesem;
 
-    return m; 
+    return m;
 }
 
 /* -------------------------------------------------------------------- */
@@ -65,29 +65,29 @@ Listesem_t InsertionenteteSem(Semaine_t Sem,Listesem_t Listesem)
 /* En sortie: Renvoie 1 si la liste est vide sinon 0.                   */
 /* -------------------------------------------------------------------- */
 
-Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste) 
+Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 {
     if (ListeSemaineVide(liste))
     {
-        InsertionenteteSem(sem,liste);
+        return InsertionenteteSem(sem,liste);
     }
-    else 
+    else
     {
-        if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)>0)
+        if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)<0)
         {
-            InsertionSemaine (sem,liste->suiv);
+            liste->suiv= InsertionSemaine (sem,liste->suiv);
         }
         else if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)==0)
         {
-            InsertionAction(sem.act,(liste->semaine).act);
+            (liste->semaine).act=InsertionAction((sem.act)->action,(liste->semaine).act);
         }
         else
         {
-            InsertionenteteSem(sem,liste);
+            return InsertionenteteSem(sem,liste);
         }
     }
     return liste;
-}   
+}
 
 /* Le fichier existe exemple de chaine dans le fichier:202215108TPs de SDD */
 
@@ -100,23 +100,17 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 /* En sortie: Renvoie l'adresse de la liste remplie.                    */
 /* -------------------------------------------------------------------- */
 
-// Listesem_t ExtractionFichier (FILE * file,Listesem_t liste)
-// { 
-//     Action_t           * act; 
-//     Semaine_t            sem; 
-//     FILE               * fichier =NULL;
-    
-//     fichier=fopen(file,'r'); 
 
-//     if (fichier!= NULL)
-//     {
-//         while (! feof(fichier))
-//         {
-//             fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine,act->jourheure,act->action);
-//             sem.act=act; 
-//             liste=InsertionSemaine(sem,liste); 
-//         } 
-//     }
-//     fclose(fichier); 
-//     return liste;
-// }
+void AfficherListeSemaine(Listesem_t listesem)
+{
+    printf(" -------------------\n");
+    printf("|      LISTE       |\n");
+    printf(" -------------------\n");
+    while (!ListeSemaineVide(listesem))
+    {
+        printf(" -------------------\n");
+        printf("Année : %c%c%c%c \t Semaine : %c%c\n",(listesem->semaine).anneesemaine[0],(listesem->semaine).anneesemaine[1],(listesem->semaine).anneesemaine[2],(listesem->semaine).anneesemaine[3],(listesem->semaine).anneesemaine[4],(listesem->semaine).anneesemaine[5]);
+        AfficherListeAction((listesem->semaine).act);
+        printf(" -------------------\n");
+    }
+}

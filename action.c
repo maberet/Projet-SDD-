@@ -11,7 +11,7 @@ Sortie : Liste d'actions vide.
 Listeaction_t InitialisationAction(void)
 {
     return NULL;
-} 
+}
 
 
 
@@ -25,15 +25,13 @@ Sortie : 1 si elle est vide, 0 sinon.
 
 Booleen_t ListeActionVide(Listeaction_t listeact)
 {
-    
     Booleen_t result = faux;
 
-    if (listeact == NULL)
+    if (listeact==NULL)
     {
-        result = vrai;
+        result=vrai;
     }
-
-    return result;
+    return (result);
 }
 
 
@@ -48,7 +46,7 @@ Sortie : Liste d'actions mise à jour.
 
 Listeaction_t InsertionEnTeteAction(Action_t act, Listeaction_t listeact)
 {
-   
+
     MaillonAct_t *m;
     m = (MaillonAct_t *)malloc(sizeof(MaillonAct_t));
 
@@ -116,5 +114,3 @@ void AfficherListeAction(Listeaction_t listeact)
         listeact = listeact->suiv;
     }
 }
-
-
