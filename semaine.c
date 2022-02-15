@@ -112,5 +112,6 @@ void AfficherListeSemaine(Listesem_t listesem)
         printf("Année : %c%c%c%c \t Semaine : %c%c\n",(listesem->semaine).anneesemaine[0],(listesem->semaine).anneesemaine[1],(listesem->semaine).anneesemaine[2],(listesem->semaine).anneesemaine[3],(listesem->semaine).anneesemaine[4],(listesem->semaine).anneesemaine[5]);
         AfficherListeAction((listesem->semaine).act);
         printf(" -------------------\n");
+        listesem=listesem->suiv;
     }
 }
