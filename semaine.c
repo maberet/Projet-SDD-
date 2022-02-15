@@ -1,5 +1,4 @@
-#include "action.h"
-#include"semaine.h"
+#include "semaine.h"
 
 /* -------------------------------------------------------------------- */
 /* InitialisationSsemaine: initialisation de la liste des années et     */
@@ -43,7 +42,7 @@ Booleen_t ListeSemaineVide(Listesem_t liste)
 Listesem_t InsertionenteteSem(Semaine_t Sem,Listesem_t Listesem) 
 {
     Maillonsem_t *m;
-    m=(Maillonsem_t*)malloc(sizof(Maillonsem_t*));
+    m=(Maillonsem_t*)malloc(sizeof(Maillonsem_t*));
                                                                  /// question ? " Pas d'écritures de messages d'erreur dans les fonctions de base : la fonction retourne un indicateur ou
                                                                  //  code d'erreur, que le programme appelant interprète et traite."
     if (m==NULL)
@@ -101,23 +100,23 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 /* En sortie: Renvoie l'adresse de la liste remplie.                    */
 /* -------------------------------------------------------------------- */
 
-Listesem_t ExtractionFichier (FILE * file,Listesem_t liste)
-{ 
-    Action_t           * act; 
-    Semaine_t            sem; 
-    FILE               * fichier =NULL;
+// Listesem_t ExtractionFichier (FILE * file,Listesem_t liste)
+// { 
+//     Action_t           * act; 
+//     Semaine_t            sem; 
+//     FILE               * fichier =NULL;
     
-    fichier=fopen(file,'r'); 
+//     fichier=fopen(file,'r'); 
 
-    if (fichier!= NULL)
-    {
-        while (! feof(fichier))
-        {
-            fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine,act->jourheure,act->action);
-            sem.act=act; 
-            liste=InsertionSemaine(sem,liste); 
-        } 
-    }
-    fclose(fichier); 
-    return liste;
-}
+//     if (fichier!= NULL)
+//     {
+//         while (! feof(fichier))
+//         {
+//             fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine,act->jourheure,act->action);
+//             sem.act=act; 
+//             liste=InsertionSemaine(sem,liste); 
+//         } 
+//     }
+//     fclose(fichier); 
+//     return liste;
+// }

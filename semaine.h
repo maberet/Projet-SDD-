@@ -6,10 +6,6 @@
 #include "action.h"
 
 #endif
-typedef enum 
-{ 
-    faux,vrai
-}Booleen_t;
 
 typedef struct sem {
     char anneesemaine [6];

@@ -6,6 +6,11 @@
 
 #endif 
 
+typedef enum 
+{ 
+    faux,vrai
+}Booleen_t;
+
 typedef struct action 
 {
     char jourheure[4];
@@ -19,7 +24,7 @@ typedef struct maillonact_t
 } MaillonAct_t,*Listeaction_t; 
 
 Listeaction_t InitialisationAction(void);
-int ListeActionVide(Listeaction_t);
+Booleen_t ListeActionVide(Listeaction_t);
 Listeaction_t InsertionEnTeteAction(Action_t, Listeaction_t);
 Listeaction_t InsertionAction(Action_t, Listeaction_t);
 void AfficherListeAction(Listeaction_t);
