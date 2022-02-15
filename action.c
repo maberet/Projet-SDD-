@@ -1,17 +1,15 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include"action.h"
-#include"semaine.h"
 
 /*-----------------------------------------------------
 InitialisationAction : Initialise la liste des actions.
 
-Entrée : Rien.
+Entrée : Aucune.
 
 Sortie : Liste d'actions vide.
 -----------------------------------------------------*/
 
-Listeaction_t InitialisationAction(void){
+Listeaction_t InitialisationAction(void)
+{
     return NULL;
 } 
 
@@ -25,11 +23,13 @@ Entrée : Liste d'actions.
 Sortie : 1 si elle est vide, 0 sinon.
 --------------------------------------------------*/
 
-int ListeActionVide(Listeaction_t listeact){
+int ListeActionVide(Listeaction_t listeact)
+{
     
     int result = 0;
 
-    if (listeact == NULL){
+    if (listeact == NULL)
+    {
         result = 1;
     }
 
@@ -46,15 +46,18 @@ Entrée : Structure d'actions act, Liste d'actions listeact.
 Sortie : Liste d'actions mise à jour.
 ---------------------------------------------------------------------------------*/
 
-Listeaction_t InsertionEnTeteAction(Action_t act, Listeaction_t listeact){
+Listeaction_t InsertionEnTeteAction(Action_t act, Listeaction_t listeact)
+{
    
     MaillonAct_t *m;
     m = (MaillonAct_t *)malloc(sizeof(MaillonAct_t));
 
-    if (m == NULL){
+    if (m == NULL)
+    {
         printf("Erreur d'allocation");
     }
-    else{
+    else
+    {
         m->action = act;
         m->suiv = listeact;
     }
@@ -72,18 +75,46 @@ Entrée : Structure d'actions act, Liste d'actions listeact.
 Sortie : Liste d'actions listeact.
 -----------------------------------------------------------------------------*/
 
-Listeaction_t InsertionAction(Action_t act,Listeaction_t listeact){
-    
-    if (ListeActionVide(listeact)){
-        InsertionEnTeteAction(act,listeact);
+Listeaction_t InsertionAction(Action_t act,Listeaction_t listeact)
+{
+    if (ListeActionVide(listeact))
+    {
+        return InsertionEnTeteAction(act,listeact);
     }
-    if ((listeact->action).jourheure > act.jourheure){
-        InsertionEnTeteAction(act,listeact);
+    if (strcmp((listeact->action).jourheure,act.jourheure) > 0)
+    {
+        return InsertionEnTeteAction(act,listeact);
     }
-    else{
-        InsertionAction(act,listeact->suiv);
+    else
+    {
+        listeact->suiv = InsertionAction(act,listeact->suiv);
     }
 
     return listeact;
 }
+
+
+
+/*------------------------------------------------
+AfficherListeAction : Affiche la liste des actions
+
+Entrée : Liste d'actions listeact.
+
+Sortie : aucune.
+-------------------------------------------------*/
+
+void AfficherListeAction(Listeaction_t listeact)
+{
+    printf(" -------------------\n");
+    printf("| LISTE DES ACTIONS |\n");
+    printf(" -------------------\n");
+    while (!ListeActionVide(listeact))
+    {
+        printf("Jour : %c \t Heure : %c%ch\n", (listeact->action).jourheure[0],(listeact->action).jourheure[1],(listeact->action).jourheure[2]);
+        printf("Action : %s\n", (listeact->action).action);
+        printf("-----------------------------\n");
+        listeact = listeact->suiv;
+    }
+}
+
 
