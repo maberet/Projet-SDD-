@@ -1,4 +1,3 @@
-#include "action.h"
 #include"semaine.h"
 
 /* -------------------------------------------------------------------- */
@@ -21,11 +20,11 @@ Listesem_t InitialisationSemaine (void){
 /* En sortie: Renvoie 1 si la liste est vide sinon 0.                   */
 /* -------------------------------------------------------------------- */
 
-Booleen_t ListeSemaineVide(Listesem_t liste) 
+Booleen_t ListeSemaineVide(Listesem_t listesem) 
 {
     Booleen_t result = faux; 
 
-    if (liste==NULL)
+    if (listesem==NULL)
     {
         result=vrai;
     }
@@ -43,7 +42,7 @@ Booleen_t ListeSemaineVide(Listesem_t liste)
 Listesem_t InsertionenteteSem(Semaine_t Sem,Listesem_t Listesem) 
 {
     Maillonsem_t *m;
-    m=(Maillonsem_t*)malloc(sizof(Maillonsem_t*));
+    m=(Maillonsem_t*)malloc(sizeof(Maillonsem_t*));
                                                                  /// question ? " Pas d'écritures de messages d'erreur dans les fonctions de base : la fonction retourne un indicateur ou
                                                                  //  code d'erreur, que le programme appelant interprète et traite."
     if (m==NULL)
@@ -70,21 +69,21 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 {
     if (ListeSemaineVide(liste))
     {
-        InsertionenteteSem(sem,liste);
+        return InsertionenteteSem(sem,liste);
     }
     else 
     {
-        if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)>0)
+        if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)<0)
         {
-            InsertionSemaine (sem,liste->suiv);
+            liste->suiv= InsertionSemaine (sem,liste->suiv);
         }
         else if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)==0)
         {
-            InsertionAction(sem.act,(liste->semaine).act);
+            (liste->semaine).act=InsertionAction((sem.act)->action,(liste->semaine).act);
         }
         else
         {
-            InsertionenteteSem(sem,liste);
+            return InsertionenteteSem(sem,liste);
         }
     }
     return liste;
@@ -101,23 +100,17 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 /* En sortie: Renvoie l'adresse de la liste remplie.                    */
 /* -------------------------------------------------------------------- */
 
-Listesem_t ExtractionFichier (FILE * file,Listesem_t liste)
-{ 
-    Action_t           * act; 
-    Semaine_t            sem; 
-    FILE               * fichier =NULL;
-    
-    fichier=fopen(file,'r'); 
 
-    if (fichier!= NULL)
+void AfficherListeSemaine(Listesem_t listesem)
+{
+    printf(" -------------------\n");
+    printf("|      LISTE       |\n");
+    printf(" -------------------\n");
+    while (!ListeSemaineVide(listesem))
     {
-        while (! feof(fichier))
-        {
-            fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine,act->jourheure,act->action);
-            sem.act=act; 
-            liste=InsertionSemaine(sem,liste); 
-        } 
+        printf(" -------------------\n");
+        printf("Année : %c%c%c%c \t Semaine : %c%c\n",(listesem->semaine).anneesemaine[0],(listesem->semaine).anneesemaine[1],(listesem->semaine).anneesemaine[2],(listesem->semaine).anneesemaine[3],(listesem->semaine).anneesemaine[4],(listesem->semaine).anneesemaine[5]);
+        AfficherListeAction((listesem->semaine).act);
+        printf(" -------------------\n");
     }
-    fclose(fichier); 
-    return liste;
 }

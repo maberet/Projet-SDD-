@@ -23,17 +23,15 @@ Entrée : Liste d'actions.
 Sortie : 1 si elle est vide, 0 sinon.
 --------------------------------------------------*/
 
-int ListeActionVide(Listeaction_t listeact)
+Booleen_t ListeActionVide(Listeaction_t listeact) 
 {
-    
-    int result = 0;
+    Booleen_t result = faux; 
 
-    if (listeact == NULL)
+    if (listeact==NULL)
     {
-        result = 1;
+        result=vrai;
     }
-
-    return result;
+    return (result);
 }
 
 
