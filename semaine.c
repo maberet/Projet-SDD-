@@ -1,5 +1,5 @@
-#include"semaine.h"
 #include "action.h"
+#include"semaine.h"
 
 /* -------------------------------------------------------------------- */
 /* InitialisationSsemaine: initialisation de la liste des années et     */

@@ -13,7 +13,6 @@ typedef enum
 
 typedef struct sem {
     char anneesemaine [6];
-
     
     MaillonAct_t *act; 
 }Semaine_t;

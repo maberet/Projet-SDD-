@@ -1,28 +1,120 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include"projet.h"
+#include"action.h"
 
-Listesem ListesemInit (void){
-    return NULL;
-}
+/*-----------------------------------------------------
+InitialisationAction : Initialise la liste des actions.
 
-Listesem Insertionentete(Listesem liste) 
+Entrée : Aucune.
+
+Sortie : Liste d'actions vide.
+-----------------------------------------------------*/
+
+Listeaction_t InitialisationAction(void)
 {
-    Maillonsem *m;
-    m=(Maillonsem*)malloc(sizof(Maillonsem));
+    return NULL;
+} 
 
-    if (m==NULL)
+
+
+/*--------------------------------------------------
+ListeActionVide : Teste si la liste est vide ou non.
+
+Entrée : Liste d'actions.
+
+Sortie : 1 si elle est vide, 0 sinon.
+--------------------------------------------------*/
+
+int ListeActionVide(Listeaction_t listeact)
+{
+    
+    int result = 0;
+
+    if (listeact == NULL)
     {
-        printf("problème malloc \n");
-        exit(1);
+        result = 1;
     }
-    m->suiv= liste; 
 
-    return m; 
+    return result;
 }
 
-Listesem Insertion (Listesem liste)
-{ 
 
-    if (liste.annee<)
+
+/*---------------------------------------------------------------------------------
+InsertionEnTeteAction : Insère en tête de liste la structure d'actions en paramètre
+
+Entrée : Structure d'actions act, Liste d'actions listeact.
+
+Sortie : Liste d'actions mise à jour.
+---------------------------------------------------------------------------------*/
+
+Listeaction_t InsertionEnTeteAction(Action_t act, Listeaction_t listeact)
+{
+   
+    MaillonAct_t *m;
+    m = (MaillonAct_t *)malloc(sizeof(MaillonAct_t));
+
+    if (m == NULL)
+    {
+        printf("Erreur d'allocation");
+    }
+    else
+    {
+        m->action = act;
+        m->suiv = listeact;
+    }
+
+    return m;
 }
+
+
+
+/*-----------------------------------------------------------------------------
+InsertionAction : Insère la structure d'actions à la bonne place dans la liste.
+
+Entrée : Structure d'actions act, Liste d'actions listeact.
+
+Sortie : Liste d'actions listeact.
+-----------------------------------------------------------------------------*/
+
+Listeaction_t InsertionAction(Action_t act,Listeaction_t listeact)
+{
+    if (ListeActionVide(listeact))
+    {
+        return InsertionEnTeteAction(act,listeact);
+    }
+    if (strcmp((listeact->action).jourheure,act.jourheure) > 0)
+    {
+        return InsertionEnTeteAction(act,listeact);
+    }
+    else
+    {
+        listeact->suiv = InsertionAction(act,listeact->suiv);
+    }
+
+    return listeact;
+}
+
+
+
+/*------------------------------------------------
+AfficherListeAction : Affiche la liste des actions
+
+Entrée : Liste d'actions listeact.
+
+Sortie : aucune.
+-------------------------------------------------*/
+
+void AfficherListeAction(Listeaction_t listeact)
+{
+    printf(" -------------------\n");
+    printf("| LISTE DES ACTIONS |\n");
+    printf(" -------------------\n");
+    while (!ListeActionVide(listeact))
+    {
+        printf("Jour : %c \t Heure : %c%ch\n", (listeact->action).jourheure[0],(listeact->action).jourheure[1],(listeact->action).jourheure[2]);
+        printf("Action : %s\n", (listeact->action).action);
+        printf("-----------------------------\n");
+        listeact = listeact->suiv;
+    }
+}
+
+

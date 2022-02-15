@@ -1,23 +1,26 @@
-typedef struct maillon {
-    Semaine semaine; 
+#ifndef projet
 
-    struct maillon *suiv;
-}Maillonsem,*Listesem;
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
-typedef struct sem {
-    char annee [4];
-    char semaine [2];
-    char ptaction; 
-}Semaine;
+#endif 
 
+typedef struct action 
+{
+    char jourheure[4];
+    char action[11];
+} Action_t;
 
-typedef struct action {
-    char jourheure[3];
-    char action[10];
+typedef struct maillonact_t
+{
+    Action_t              action;
+    struct maillonact_t * suiv;
+} MaillonAct_t,*Listeaction_t; 
 
-    struct action *suiv;
-}Action,*Listeaction; 
-
-Listesem ListesemInit(void);
-
-Listesem Insertion(Listesem)
+Listeaction_t InitialisationAction(void);
+int ListeActionVide(Listeaction_t);
+Listeaction_t InsertionEnTeteAction(Action_t, Listeaction_t);
+Listeaction_t InsertionAction(Action_t, Listeaction_t);
+void AfficherListeAction(Listeaction_t);
+Action_t Ajout(char jh[4], char act[11]);
