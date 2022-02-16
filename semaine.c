@@ -73,17 +73,18 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
     }
     else
     {
-        if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)<0)
+        if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)>0)
         {
-            liste->suiv= InsertionSemaine (sem,liste->suiv);
+            return InsertionenteteSem(sem,liste);
         }
         else if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)==0)
         {
-            (liste->semaine).act=InsertionAction((sem.act)->action,(liste->semaine).act);
+            (liste->semaine).act = InsertionAction((sem.act)->action,(liste->semaine).act);
+            return liste;
         }
         else
         {
-            return InsertionenteteSem(sem,liste);
+            liste->suiv = InsertionSemaine(sem,liste->suiv);
         }
     }
     return liste;
@@ -103,15 +104,13 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 
 void AfficherListeSemaine(Listesem_t listesem)
 {
-    printf(" -------------------\n");
+    /*printf(" -------------------\n");
     printf("|      LISTE       |\n");
-    printf(" -------------------\n");
+    printf(" -------------------\n");*/
     while (!ListeSemaineVide(listesem))
     {
-        printf(" -------------------\n");
-        printf("Année : %c%c%c%c \t Semaine : %c%c\n",(listesem->semaine).anneesemaine[0],(listesem->semaine).anneesemaine[1],(listesem->semaine).anneesemaine[2],(listesem->semaine).anneesemaine[3],(listesem->semaine).anneesemaine[4],(listesem->semaine).anneesemaine[5]);
-        AfficherListeAction((listesem->semaine).act);
-        printf(" -------------------\n");
+        printf("------- Année : %c%c%c%c \t Semaine : %c%c -------\n",(listesem->semaine).anneesemaine[0],(listesem->semaine).anneesemaine[1],(listesem->semaine).anneesemaine[2],(listesem->semaine).anneesemaine[3],(listesem->semaine).anneesemaine[4],(listesem->semaine).anneesemaine[5]);
+        //AfficherListeAction((listesem->semaine).act);
         listesem=listesem->suiv;
     }
 }

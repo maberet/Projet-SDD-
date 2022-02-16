@@ -1,10 +1,22 @@
 #include "semaine.h"
+
+Semaine_t LectureDonnees(FILE * file)
+{
+    Action_t            act;
+    Semaine_t           sem;
+
+    fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine, act.jourheure, act.action);
+    sem.act = InsertionAction(act,InitialisationAction());
+
+    return sem;
+}
+
+
+
 int main()
 {
     Listesem_t          listesem;
-    Action_t            siuu;
     Semaine_t           sem;
-
     FILE              * file;
 
     listesem = InitialisationSemaine();
@@ -14,12 +26,10 @@ int main()
         printf("Erreur d'ouverture");
     }
     else
-    {
+    {   
         while(!feof(file))
         {
-            sem.act=(MaillonAct_t *)malloc(sizeof(MaillonAct_t));
-            fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine,siuu.jourheure,siuu.action);
-            (sem.act)->action=siuu;
+            sem = LectureDonnees(file);
             listesem = InsertionSemaine(sem,listesem);
         }
     }
