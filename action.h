@@ -28,4 +28,5 @@ Booleen_t ListeActionVide(Listeaction_t);
 Listeaction_t InsertionEnTeteAction(Action_t, Listeaction_t);
 Listeaction_t InsertionAction(Action_t, Listeaction_t);
 void AfficherListeAction(Listeaction_t);
-Action_t Ajout(char jh[4], char act[11]);
+Listeaction_t SuppressionAction( Listeaction_t);
+void LiberationListeAction (Listeaction_t);

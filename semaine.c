@@ -42,9 +42,7 @@ Booleen_t ListeSemaineVide(Listesem_t listesem)
 Listesem_t InsertionenteteSem(Semaine_t Sem,Listesem_t Listesem) 
 {
     Maillonsem_t *m;
-    m=(Maillonsem_t*)malloc(sizeof(Maillonsem_t*));
-                                                                 /// question ? " Pas d'écritures de messages d'erreur dans les fonctions de base : la fonction retourne un indicateur ou
-                                                                 //  code d'erreur, que le programme appelant interprète et traite."
+    m=(Maillonsem_t*)malloc(sizeof(Maillonsem_t));
     if (m==NULL)
     {
         printf("problème d'allocation \n");
@@ -89,11 +87,9 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
     return liste;
 }   
 
-/* Le fichier existe exemple de chaine dans le fichier:202215108TPs de SDD */
-
 /* -------------------------------------------------------------------- */
-/* InsertionSemaine: Extraction des informations presente dans un       */
-/* fichier et insertion dans une la structure.                          */
+/* AfficherListeSemaine: Affiche la liste des années/semaine et appelle */
+/* la fonction d'affichage des actions.                                 */
 /*                                                                      */
 /* En entrée: Adresse d'une liste et fichier.                           */
 /*                                                                      */
@@ -114,4 +110,45 @@ void AfficherListeSemaine(Listesem_t listesem)
         printf(" -------------------\n");
         listesem=listesem->suiv;
     }
+}
+// A faire !! 
+/* -------------------------------------------------------------------- */
+/* LibérationSemaine: Affiche la liste des années/semaine et appelle    */
+/* la fonction d'affichage des actions.                                 */
+/*                                                                      */
+/* En entrée: Adresse d'une liste et fichier.                           */
+/*                                                                      */
+/* En sortie: Renvoie l'adresse de la liste remplie.                    */
+/* -------------------------------------------------------------------- */
+
+Listesem_t LiberationSemaine (Listesem_t listeprec)
+{
+    Listesem_t              temp;
+
+
+    LiberationListeAction(((listeprec->suiv)->semaine).act);
+    temp=(listeprec->suiv)->suiv;
+    free ((listeprec->suiv)->suiv);
+    listeprec->suiv=temp; 
+    return listeprec; 
+}
+
+// A faire !! 
+/* -------------------------------------------------------------------- */
+/* LibérationSemaine: Affiche la liste des années/semaine et appelle    */
+/* la fonction d'affichage des actions.                                 */
+/*                                                                      */
+/* En entrée: Adresse d'une liste et fichier.                           */
+/*                                                                      */
+/* En sortie: Renvoie l'adresse de la liste remplie.                    */
+/* -------------------------------------------------------------------- */
+
+void LiberationListeSemaine (Listesem_t listesem)
+{
+     while (!ListeSemaineVide(listesem)&&(!ListeSemaineVide(listesem->suiv)))
+    {
+        listesem=LiberationSemaine(listesem); // supprime le suivant
+    }
+    LiberationListeAction((listesem->semaine).act);
+    free (listesem);
 }

@@ -1,4 +1,8 @@
 #include "semaine.h"
+
+//  Remarque : Le nom du fichier en entrée doit être en argument de la ligne de commande.
+
+
 int main()
 {
     Listesem_t          listesem;
@@ -6,6 +10,7 @@ int main()
     Semaine_t           sem;
 
     FILE              * file;
+
     listesem = InitialisationSemaine();
     file = fopen("action.txt","r");
     if (file == NULL)
@@ -24,7 +29,7 @@ int main()
     }
 
     AfficherListeSemaine(listesem);
-
+    LiberationListeSemaine(listesem);
     return 0;
 }
 

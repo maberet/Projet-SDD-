@@ -115,4 +115,21 @@ void AfficherListeAction(Listeaction_t listeact)
     }
 }
 
+Listeaction_t SuppressionAction (Listeaction_t listeactprec)
+{
+    Listeaction_t           temp; 
 
+    temp=(listeactprec->suiv)->suiv;
+    free(listeactprec->suiv);
+    listeactprec->suiv=temp;
+    return (listeactprec);
+}
+
+void LiberationListeAction (Listeaction_t listeact) //listeact est le maillon source de la liste action. 
+{
+    while (!ListeActionVide(listeact)&&(!ListeActionVide(listeact->suiv)))
+    {
+        listeact=SuppressionAction(listeact); //supprime le suivant
+    }
+    free (listeact);
+}
