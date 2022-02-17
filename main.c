@@ -1,40 +1,15 @@
 #include "semaine.h"
 
-Semaine_t LectureDonnees(FILE * file)
+int main(int argc, char ** argv)
 {
-    Action_t            act;
-    Semaine_t           sem;
-
-    fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine, act.jourheure, act.action);
-    sem.act = InsertionAction(act,InitialisationAction());
-
-    return sem;
-}
-
-
-
-int main()
-{
-    Listesem_t          listesem;
-    Semaine_t           sem;
-    FILE              * file;
-
+    Listesem_t listesem;
     listesem = InitialisationSemaine();
-    file = fopen("action.txt","r");
-    if (file == NULL)
-    {
-        printf("Erreur d'ouverture");
-    }
-    else
-    {   
-        while(!feof(file))
-        {
-            sem = LectureDonnees(file);
-            listesem = InsertionSemaine(sem,listesem);
-        }
-    }
+
+    listesem = InsertionDonnees(argv[1],listesem);
 
     AfficherListeSemaine(listesem);
+
+    Sauvegarde(argv[2],listesem);
 
     return 0;
 }

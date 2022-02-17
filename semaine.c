@@ -1,9 +1,10 @@
 #include"semaine.h"
 
 /* -------------------------------------------------------------------- */
-/* InitialisationSsemaine: initialisation de la liste des années et     */
+/* InitialisationSemaine: initialisation de la liste des années et      */
 /* des semaines.                                                        */
-/* En entrée: Rien.                                                     */
+/*                                                                      */
+/* En entrée: Aucune.                                                   */
 /*                                                                      */
 /* En sortie: Renvoie la liste vide.                                    */
 /* -------------------------------------------------------------------- */
@@ -12,10 +13,12 @@ Listesem_t InitialisationSemaine (void){
     return NULL;
 }
 
+
+
 /* -------------------------------------------------------------------- */
 /* ListeSemaineVide: vérifie si une liste est vide.                     */
 /*                                                                      */
-/* En entrée: Liste.                                                    */
+/* En entrée: Liste des semaines.                                       */
 /*                                                                      */
 /* En sortie: Renvoie 1 si la liste est vide sinon 0.                   */
 /* -------------------------------------------------------------------- */
@@ -31,18 +34,20 @@ Booleen_t ListeSemaineVide(Listesem_t listesem)
     return (result);
 }
 
-/* -------------------------------------------------------------------- */
-/* InsertionenteteSemaine: Insère en tête de la liste semaine.          */
-/*                                                                      */
-/* En entrée: Adresse d'une liste.                                      */
-/*                                                                      */
-/* En sortie: Renvoie 1 si la liste est vide sinon 0.                   */
-/* -------------------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------------- */
+/* InsertionenteteSemaine: Insère la structure semaine en tête de la liste semaine.  */
+/*                                                                                   */
+/* En entrée: Structure semaine, Liste des semaines.                                 */
+/*                                                                                   */
+/* En sortie: Tête de la liste des semaines.                                         */
+/* --------------------------------------------------------------------------------- */
 
 Listesem_t InsertionenteteSem(Semaine_t Sem,Listesem_t Listesem)
 {
     Maillonsem_t *m;
-    m=(Maillonsem_t*)malloc(sizeof(Maillonsem_t*));
+    m=(Maillonsem_t*)malloc(sizeof(Maillonsem_t));
                                                                  /// question ? " Pas d'écritures de messages d'erreur dans les fonctions de base : la fonction retourne un indicateur ou
                                                                  //  code d'erreur, que le programme appelant interprète et traite."
     if (m==NULL)
@@ -55,6 +60,8 @@ Listesem_t InsertionenteteSem(Semaine_t Sem,Listesem_t Listesem)
 
     return m;
 }
+
+
 
 /* -------------------------------------------------------------------- */
 /* InsertionSemaine: Recherche recursive de l'adresse d'insertion et    */
@@ -90,6 +97,8 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
     return liste;
 }
 
+
+
 /* Le fichier existe exemple de chaine dans le fichier:202215108TPs de SDD */
 
 /* -------------------------------------------------------------------- */
@@ -104,13 +113,92 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 
 void AfficherListeSemaine(Listesem_t listesem)
 {
-    /*printf(" -------------------\n");
-    printf("|      LISTE       |\n");
-    printf(" -------------------\n");*/
     while (!ListeSemaineVide(listesem))
     {
-        printf("------- Année : %c%c%c%c \t Semaine : %c%c -------\n",(listesem->semaine).anneesemaine[0],(listesem->semaine).anneesemaine[1],(listesem->semaine).anneesemaine[2],(listesem->semaine).anneesemaine[3],(listesem->semaine).anneesemaine[4],(listesem->semaine).anneesemaine[5]);
-        //AfficherListeAction((listesem->semaine).act);
+        printf("---------------------------------------------\n");
+        printf("--------- Année %c%c%c%c \t Semaine %c%c ---------\n",(listesem->semaine).anneesemaine[0],(listesem->semaine).anneesemaine[1],(listesem->semaine).anneesemaine[2],(listesem->semaine).anneesemaine[3],(listesem->semaine).anneesemaine[4],(listesem->semaine).anneesemaine[5]);
+        AfficherListeAction((listesem->semaine).act);
         listesem=listesem->suiv;
     }
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/* LectureDonnees: Ajoute les données du fichier dans la structure semaine.   */
+/*                                                                            */
+/* En entrée: File.                                                           */
+/*                                                                            */
+/* En sortie: Structure semaine                                               */
+/* -------------------------------------------------------------------------- */
+
+Semaine_t LectureDonnees(FILE * file)
+{
+    Action_t            act;
+    Semaine_t           sem;
+
+    fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine, act.jourheure, act.action);
+    sem.act = InsertionAction(act,InitialisationAction());
+
+    return sem;
+}
+
+
+
+/* ----------------------------------------------------------------------------- */
+/* InsertionDonnees: Ajoute les données du fichier dans la liste des semaines.   */
+/*                                                                               */
+/* En entrée: Nom du fichier, liste des semaines.                                */
+/*                                                                               */
+/* En sortie: Liste des semaines                                                 */
+/* ----------------------------------------------------------------------------- */
+
+Listesem_t InsertionDonnees(char * fichier, Listesem_t listesem)
+{
+    FILE       * file;
+    Semaine_t    sem;
+
+    file = fopen(fichier,"r");
+
+    if (file == NULL)
+    {
+        printf("Erreur d'ouverture de fichier");
+    }
+    else
+    {
+        sem = LectureDonnees(file);
+        while(!feof(file))
+        {
+            listesem = InsertionSemaine(sem,listesem);
+            sem = LectureDonnees(file);
+        }
+    }
+
+    fclose(file);
+
+    return listesem;
+}
+
+
+
+void Sauvegarde(char * fichier, Listesem_t listesem)
+{   
+    FILE * file;
+
+    file = fopen(fichier,"w");
+
+    if (file == NULL)
+    {
+        printf("Erreur d'ouverture de fichier");
+    }
+    else
+    {
+        while(!ListeSemaineVide(listesem))
+        {
+            SauvegardeAction(file, (listesem->semaine).anneesemaine, (listesem->semaine).act);
+            listesem = listesem->suiv;
+        }
+    }
+
+    fclose(file);
 }
