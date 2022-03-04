@@ -8,7 +8,7 @@
 /*                              En sortie : Liste d'actions vide.                                                    */
 /* ----------------------------------------------------------------------------------------------------------------- */
 
-Listeaction_t InitialisationAction(void)
+Listeaction_t InitialisationAction (void)
 {
     return NULL;
 }
@@ -116,24 +116,24 @@ void AfficherListeAction(Listeaction_t listeact)
     }
 }
 
-Listeaction_t SuppressionAction (Listeaction_t listeactprec)
-{
-    Listeaction_t           temp; 
+// Listeaction_t SuppressionAction (Listeaction_t listeactprec)
+// {
+//     Listeaction_t           temp; 
 
-    temp=(listeactprec->suiv)->suiv;
-    free(listeactprec->suiv);
-    listeactprec->suiv=temp;
-    return (listeactprec);
-}
+//     temp=(listeactprec->suiv)->suiv;
+//     free(listeactprec->suiv);
+//     listeactprec->suiv=temp;
+//     return (listeactprec);
+// }
 
-void LiberationListeAction (Listeaction_t listeact) //listeact est le maillon source de la liste action. 
-{
-    while (!ListeActionVide(listeact)&&(!ListeActionVide(listeact->suiv)))
-    {
-        listeact=SuppressionAction(listeact); //supprime le suivant
-    }
-    free (listeact);
-}
+// void LiberationListeAction (Listeaction_t listeact) //listeact est le maillon source de la liste action. 
+// {
+//     while (!ListeActionVide(listeact)&&(!ListeActionVide(listeact->suiv)))
+//     {
+//         listeact=SuppressionAction(listeact); //supprime le suivant
+//     }
+//     free (listeact);
+// }
 
 void SauvegardeAction(FILE * file, char * anneesemaine, Listeaction_t listeact)
 {
@@ -141,5 +141,73 @@ void SauvegardeAction(FILE * file, char * anneesemaine, Listeaction_t listeact)
     {
         fprintf(file, "%s%s%s\n", anneesemaine, (listeact->action).jourheure, (listeact->action).action);
         listeact = listeact->suiv;
+    }
+}
+
+Booleen_t RechercheAction(Listeaction_t listeact, int jour, char heure[])
+{   
+    Booleen_t resultat = faux;
+    char            jr[2];
+    char            jourhr[4];
+
+    sprintf(jr, "%d", jour);
+    strcpy(jourhr,jr);
+    strcat(jourhr,heure);
+
+
+    while(listeact!=NULL)
+    {
+        if(strcmp((listeact->action).jourheure,jourhr) == 0) 
+        {
+            resultat = vrai;
+        }
+        listeact=listeact->suiv;
+    }
+    return resultat;
+}
+
+Listeaction_t SuppressionActionEnTete(Listeaction_t listeact)
+{
+    MaillonAct_t *ActionTemp; // Maillon temporaire qui va permettre de supprimer la tête de liste 
+    if(ListeActionVide(listeact)) // si la liste est vide on ne peut rien supprimer, c'est un cas d'erreur
+    {
+        printf("Suppression d'une action sur une liste vide, operation interdite");
+        exit(1);
+    }
+    ActionTemp = listeact; // recuperation de l'action en tête de liste
+    listeact = listeact->suiv; // on avance la liste sur le maillon suivant
+    free(ActionTemp); // on libere le maillon en tete
+    return listeact;
+}
+
+Listeaction_t SuppressionMaillonAction(Listeaction_t listeact, int jour, char* heure)
+{   
+    Action_t        actionTemp = listeact->action;
+    char            jr[2];
+    char            jourhr[4];
+
+    sprintf(jr, "%d", jour);
+    strcpy(jourhr,jr);
+    strcat(jourhr,heure);
+
+    if(ListeActionVide(listeact)) // si la liste est vide, on retourne la liste
+        return listeact;
+    if(actionTemp.jourheure > jourhr) // jour et heure en tete > au jour voulu -> action pas dans la liste
+        return listeact;
+    if(strcmp(actionTemp.jourheure, jourhr) == 0) // si la tete vaut l'action voulue
+        return SuppressionActionEnTete(listeact); // on la supprime
+
+    listeact->suiv=SuppressionMaillonAction(listeact->suiv, jour, heure); // appel recursif
+    return listeact;
+}
+
+
+
+void LiberationListeActions(Listeaction_t listeact)
+{
+
+    while(!ListeActionVide(listeact))
+    {
+        listeact = SuppressionActionEnTete(listeact);
     }
 }
