@@ -1,35 +1,21 @@
-#include "semaine.h"
+#include "motif.h"
 
-//  Remarque : Le nom du fichier en entrée doit être en argument de la ligne de commande.
-
-
-int main()
+int main(int argc, char ** argv)
 {
-    Listesem_t          listesem;
-    Action_t            siuu;
-    Semaine_t           sem;
-
-    FILE              * file;
+    Listesem_t listesem;
+    Date_t date[TAILLEMAX];
 
     listesem = InitialisationSemaine();
-    file = fopen("action.txt","r");
-    if (file == NULL)
-    {
-        printf("Erreur d'ouverture");
-    }
-    else
-    {
-        while(!feof(file))
-        {
-            sem.act=(MaillonAct_t *)malloc(sizeof(MaillonAct_t));
-            fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine,siuu.jourheure,siuu.action);
-            (sem.act)->action=siuu;
-            listesem = InsertionSemaine(sem,listesem);
-        }
-    }
 
-    AfficherListeSemaine(listesem);
-    LiberationListeSemaine(listesem);
+    listesem = InsertionDonnees(argv[1],listesem);
+
+    //AfficherListeSemaine(listesem);
+
+    Sauvegarde(argv[2],listesem);
+
+    int i = Motif(argv[3],listesem,date,&date[TAILLEMAX]);
+
+    AfficherListeContigue(argv[3],date,&date[i]);
+
     return 0;
 }
-

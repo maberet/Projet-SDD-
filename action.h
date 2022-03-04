@@ -30,3 +30,4 @@ Listeaction_t InsertionAction(Action_t, Listeaction_t);
 void AfficherListeAction(Listeaction_t);
 Listeaction_t SuppressionAction( Listeaction_t);
 void LiberationListeAction (Listeaction_t);
+void SauvegardeAction(FILE *, char *, Listeaction_t);
