@@ -6,8 +6,8 @@ int main(int argc, char ** argv)
     Date_t     date[TAILLEMAX];
     int        i;
     int        x;
-    char     * sauv;
-    char     * motif;
+    char       sauv[20];
+    char       motif[11];
 
     listesem = InitialisationSemaine();
 
