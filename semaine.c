@@ -112,6 +112,7 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 
 void AfficherListeSemaine(Listesem_t listesem)
 {
+    if (ListeSemaineVide(listesem)){printf("rien à afficher \n");}
     while (!ListeSemaineVide(listesem))
     {
         printf("---------------------------------------------\n");
@@ -129,38 +130,6 @@ void AfficherListeSemaine(Listesem_t listesem)
 /*                                                                      */
 /* En sortie: Renvoie l'adresse de la liste remplie.                    */
 /* -------------------------------------------------------------------- */
-
-// Listesem_t LiberationSemaine (Listesem_t listeprec)
-// {
-//     Listesem_t              temp;
-
-
-//     LiberationListeAction(((listeprec->suiv)->semaine).act);
-//     temp=(listeprec->suiv)->suiv;
-//     free ((listeprec->suiv)->suiv);
-//     listeprec->suiv=temp; 
-//     return listeprec; 
-// }
-
-// A faire !! 
-/* -------------------------------------------------------------------- */
-/* LibérationSemaine: Affiche la liste des années/semaine et appelle    */
-/* la fonction d'affichage des actions.                                 */
-/*                                                                      */
-/* En entrée: Adresse d'une liste et fichier.                           */
-/*                                                                      */
-/* En sortie: Renvoie l'adresse de la liste remplie.                    */
-/* -------------------------------------------------------------------- */
-
-// void LiberationListeSemaine (Listesem_t listesem)
-// {
-//      while (!ListeSemaineVide(listesem)&&(!ListeSemaineVide(listesem->suiv)))
-//     {
-//         listesem=LiberationSemaine(listesem); // supprime le suivant
-//     }
-//     LiberationListeAction((listesem->semaine).act);
-//     free (listesem);
-// }
 
 
 /* -------------------------------------------------------------------------- */
@@ -248,8 +217,9 @@ Booleen_t RechercheSemaineAction(Listesem_t listesem, char annee[], char sem[], 
 
     strcpy(anneesem,annee);
     strcat(anneesem,sem);
+
     while(listesem!=NULL)
-    {
+    {  
         if(strcmp((listesem->semaine).anneesemaine, anneesem) == 0) // si on trouve la semaine voulue
         {
             resultat = RechercheAction((listesem->semaine).act, jour, heure);
@@ -267,18 +237,25 @@ Booleen_t SuppressionAction(Listesem_t listesem, char* annee, char* sem, int jou
     strcpy(anneesem,annee);
     strcat(anneesem,sem);
 
+    printf("annesem: %s\n",anneesem);
+
     if(RechercheSemaineAction(listesem, annee, sem, jour, heure)) // si l'action existe dans la liste
-    {
+    {   printf("avion\n");
         while(listesem!=NULL)
         {
             if(strcmp((listesem->semaine).anneesemaine, anneesem) == 0) // si on trouve la semaine voulue
             {
                 (listesem->semaine).act = SuppressionMaillonAction((listesem->semaine).act, jour, heure); // suppression de l'action dans la liste d'actions
                 Validation = ListeActionVide((listesem->semaine).act); // si la liste des actions est vide après suppression on notifie que l'on doit supprimer la semaine de la liste
+                if (Validation==1)
+                {
+                 listesem= SuppressionMaillonSemaine(listesem,annee,sem);
+                }
             }
             listesem = listesem->suiv;
         }
         printf("La suppression a ete effectuee\n");
+
     }
     else{
         printf("L'action a supprimer n'existe pas\n");
@@ -298,6 +275,7 @@ Listesem_t SuppressionSemaineEnTete(Listesem_t listesem)
     }
     SemTemp = listesem; // recuperation de la semaine en tête de liste
     listesem = listesem->suiv; // on avance la liste sur le maillon suivant
+    SemTemp=InitialisationSemaine();
     free(SemTemp); // on libere le maillon en tete
     return listesem;
 }
@@ -323,7 +301,7 @@ Listesem_t SuppressionMaillonSemaine(Listesem_t listesem, char* annee, char* sem
     return listesem;
 }
 
-void LiberationSemaines(Listesem_t listesem)
+Listesem_t LiberationSemaines(Listesem_t listesem)
 {
 
     while(!ListeSemaineVide(listesem))
@@ -331,4 +309,5 @@ void LiberationSemaines(Listesem_t listesem)
         LiberationListeActions((listesem->semaine).act);
         listesem = SuppressionSemaineEnTete(listesem);
     }
+    return listesem;
 }

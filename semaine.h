@@ -33,4 +33,4 @@ Booleen_t RechercheSemaineAction(Listesem_t, char [], char[], int, char[]);
 Booleen_t SuppressionAction(Listesem_t, char *, char *, int, char *);
 Listesem_t SuppressionSemaineEnTete(Listesem_t);
 Listesem_t SuppressionMaillonSemaine(Listesem_t, char* , char* );
-void LiberationSemaines(Listesem_t);
+Listesem_t LiberationSemaines(Listesem_t);

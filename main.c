@@ -12,12 +12,13 @@ int main(int argc, char ** argv)
 
     AfficherListeSemaine(listesem);
 
-    i=SuppressionAction(listesem," 022","15",4,"08");
+    i=SuppressionAction(listesem,"2022","15",4,"16");
     printf("i=%d\n",i);
     AfficherListeSemaine(listesem);
     Sauvegarde(argv[2],listesem);
 
-    LiberationSemaines(listesem);
+    listesem=LiberationSemaines(listesem);
+    AfficherListeSemaine(listesem);
     
     // int i = Motif(argv[3],listesem,date,&date[TAILLEMAX]);
 

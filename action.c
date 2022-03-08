@@ -154,7 +154,6 @@ Booleen_t RechercheAction(Listeaction_t listeact, int jour, char heure[])
     strcpy(jourhr,jr);
     strcat(jourhr,heure);
 
-
     while(listeact!=NULL)
     {
         if(strcmp((listeact->action).jourheure,jourhr) == 0) 
@@ -163,6 +162,7 @@ Booleen_t RechercheAction(Listeaction_t listeact, int jour, char heure[])
         }
         listeact=listeact->suiv;
     }
+
     return resultat;
 }
 
@@ -182,19 +182,19 @@ Listeaction_t SuppressionActionEnTete(Listeaction_t listeact)
 
 Listeaction_t SuppressionMaillonAction(Listeaction_t listeact, int jour, char* heure)
 {   
-    Action_t        actionTemp = listeact->action;
     char            jr[2];
     char            jourhr[4];
 
     sprintf(jr, "%d", jour);
     strcpy(jourhr,jr);
     strcat(jourhr,heure);
+    printf ("jourhr: %s\n", jourhr);
 
     if(ListeActionVide(listeact)) // si la liste est vide, on retourne la liste
         return listeact;
-    if(actionTemp.jourheure > jourhr) // jour et heure en tete > au jour voulu -> action pas dans la liste
+    if(strcmp((listeact->action).jourheure, jourhr)>0) // jour et heure en tete > au jour voulu -> action pas dans la liste
         return listeact;
-    if(strcmp(actionTemp.jourheure, jourhr) == 0) // si la tete vaut l'action voulue
+    if(strcmp((listeact->action).jourheure, jourhr) == 0) // si la tete vaut l'action voulue
         return SuppressionActionEnTete(listeact); // on la supprime
 
     listeact->suiv=SuppressionMaillonAction(listeact->suiv, jour, heure); // appel recursif
