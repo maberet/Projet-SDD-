@@ -10,13 +10,17 @@ int main(int argc, char ** argv)
 
     listesem = InsertionDonnees(argv[1],listesem);
 
+    printf("Avant suppression\n");
     AfficherListeSemaine(listesem);
 
     i=SuppressionAction(listesem,"2022","15",4,"16");
-    printf("i=%d\n",i);
+    if (i){
+        listesem=SuppressionMaillonSemaine(listesem,"2022","15");
+    }
+    printf("Après suppression\n");
     AfficherListeSemaine(listesem);
     Sauvegarde(argv[2],listesem);
-
+    printf("Suppression de tout\n");
     listesem=LiberationSemaines(listesem);
     AfficherListeSemaine(listesem);
     
