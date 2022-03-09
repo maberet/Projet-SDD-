@@ -4,10 +4,15 @@ int main(int argc, char ** argv)
 {
     Listesem_t listesem;
     Date_t     date[TAILLEMAX];
+    Booleen_t  b;
     int        i;
     int        x;
     char       sauv[20];
     char       motif[11];
+    char       annee[5];
+    char       jour[2];
+    char       semaine[3];
+    char       heure[3];
 
     listesem = InitialisationSemaine();
 
@@ -30,7 +35,16 @@ int main(int argc, char ** argv)
                 i = Motif(motif,listesem,date,&date[TAILLEMAX]);
                 AfficherListeContigue(motif,date,&date[i]); break;
         
-        case 4: break;
+        case 4: printf("Annee?\n");
+                scanf("%s",annee);
+                printf("Semaine?\n");
+                scanf("%s",semaine);
+                printf("Jour?\n");
+                scanf("%s",jour);
+                printf("Heure?\n");
+                scanf("%s",heure);
+                b = SuppressionAction()
+                break;
     }
 
     return 0;
