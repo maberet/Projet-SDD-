@@ -123,7 +123,7 @@ void AfficherListeSemaine(Listesem_t listesem)
 
 
 /* ----------------------------------------------------------------------------------------------------------------- */
-/*                              LectureDonnees: Ajoute les données du fichier dans la structure semaine.             */
+/*                              LectureDonnees: Ajoute les données d'une ligne du fichier dans la structure semaine. */
 /*                                                                                                                   */
 /*                              En entrée: File.                                                                     */
 /*                                                                                                                   */
@@ -143,13 +143,14 @@ Semaine_t LectureDonnees(FILE * file)
 
 
 
-/* ----------------------------------------------------------------------------- */
-/* InsertionDonnees: Ajoute les données du fichier dans la liste des semaines.   */
-/*                                                                               */
-/* En entrée: Nom du fichier, liste des semaines.                                */
-/*                                                                               */
-/* En sortie: Liste des semaines                                                 */
-/* ----------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+/*                              InsertionDonnees: Ajoute les données du fichier dans la liste des semaines.          */
+/*                                                                                                                   */
+/*                              En entrée: chaine fichier, liste des semaines listesem.                              */
+/*                                                                                                                   */
+/*                              En sortie: Liste des semaines.                                                       */
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 Listesem_t InsertionDonnees(char * fichier, Listesem_t listesem)
 {
@@ -164,10 +165,10 @@ Listesem_t InsertionDonnees(char * fichier, Listesem_t listesem)
     }
     else
     {
-        sem = LectureDonnees(file);
+        sem = LectureDonnees(file); // on lit les données.
         while(!feof(file))
         {
-            listesem = InsertionSemaine(sem,listesem);
+            listesem = InsertionSemaine(sem,listesem); // on insère les données dans la liste.
             sem = LectureDonnees(file);
         }
     }
@@ -178,6 +179,14 @@ Listesem_t InsertionDonnees(char * fichier, Listesem_t listesem)
 }
 
 
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+/*                              Sauvegarde: Sauvegarde la liste des semaines dans un fichier voulu.                  */
+/*                                                                                                                   */
+/*                              En entrée: chaine fichier, liste des semaines listesem.                              */
+/*                                                                                                                   */
+/*                              En sortie: aucune.                                                                   */
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 void Sauvegarde(char * fichier, Listesem_t listesem)
 {   
@@ -191,15 +200,26 @@ void Sauvegarde(char * fichier, Listesem_t listesem)
     }
     else
     {
-        while(!ListeSemaineVide(listesem))
+        while(!ListeSemaineVide(listesem)) // tant que la liste n'est pas vide:
         {
-            SauvegardeAction(file, (listesem->semaine).anneesemaine, (listesem->semaine).act);
-            listesem = listesem->suiv;
+            SauvegardeAction(file, (listesem->semaine).anneesemaine, (listesem->semaine).act); // on sauvegarde l'action.
+            listesem = listesem->suiv; // on passe au suivant.
         }
     }
 
     fclose(file);
 }
+
+
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+/*                              RechercheSemaineAction: Recherche, à l'aide des paramètres,                          */
+/*                                           une semaine et action voulues.                                          */
+/*                                                                                                                   */
+/*                              En entrée: chaines annee,sem,heure, entier jour, liste des semaines listesem.        */
+/*                                                                                                                   */
+/*                              En sortie: Booléen.                                                                  */
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 Booleen_t RechercheSemaineAction(Listesem_t listesem, char annee[], char sem[], int jour, char heure[])
 {
@@ -213,47 +233,66 @@ Booleen_t RechercheSemaineAction(Listesem_t listesem, char annee[], char sem[], 
     {  
         if(strcmp((listesem->semaine).anneesemaine, anneesem) == 0) // si on trouve la semaine voulue
         {
-            resultat = RechercheAction((listesem->semaine).act, jour, heure);
+            resultat = RechercheAction((listesem->semaine).act, jour, heure); // on chercher si on trouve l'action ou non.
         }
-        listesem=listesem->suiv;
+        listesem=listesem->suiv; // on passe au suivant.
     }
     return resultat;
 }
 
+
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+/*                              SuppressionAction: Suppression, à l'aide des paramètres,                             */
+/*                                           de la liste des actions voulue.                                         */
+/*                                                                                                                   */
+/*                              En entrée: chaines annee,sem,heure, entier jour, liste des semaines listesem.        */
+/*                                                                                                                   */
+/*                              En sortie: Booléen.                                                                  */
+/* ----------------------------------------------------------------------------------------------------------------- */
+
 Booleen_t SuppressionAction(Listesem_t listesem, char* annee, char* sem, int jour, char* heure)
 {   
-    Booleen_t       Validation = faux; // permet de savoir si l'action a été supprimée quand on parcours la liste
+    Booleen_t       Validation = faux; // permet de savoir si l'action a été supprimée quand on parcours la liste.
     char            anneesem[7];
 
     strcpy(anneesem,annee);
     strcat(anneesem,sem);
 
-    //printf("annesem: %s\n",anneesem);
-
-    if(RechercheSemaineAction(listesem, annee, sem, jour, heure)) // si l'action existe dans la liste
-    {   //printf("avion\n");
+    if(RechercheSemaineAction(listesem, annee, sem, jour, heure)) // si l'action existe dans la liste.
+    {   
         while(listesem!=NULL)
         {
             if(strcmp((listesem->semaine).anneesemaine, anneesem) == 0) // si on trouve la semaine voulue
             {
                 (listesem->semaine).act = SuppressionMaillonAction((listesem->semaine).act, jour, heure); // suppression de l'action dans la liste d'actions
                 Validation = ListeActionVide((listesem->semaine).act); // si la liste des actions est vide après suppression on notifie que l'on doit supprimer la semaine de la liste
-                /*if (Validation==1)
-                {
-                 listesem= SuppressionMaillonSemaine(listesem,annee,sem);
-                }*/
             }
             listesem = listesem->suiv;
         }
         printf("La suppression a ete effectuee\n");
+         while(listesem!=NULL)
+         {
+            if(strcmp((listesem->semaine).anneesemaine, anneesem) == 0) // si on trouve la semaine voulue.
+            {
+                (listesem->semaine).act = SuppressionMaillonAction((listesem->semaine).act, jour, heure); // suppression de l'action dans la liste d'actions.
+                Validation = ListeActionVide((listesem->semaine).act); // test si la liste d'actions est vide, pour ensuite supprimer la liste des semaines dans le cas où elle est vide.
+           }
+        }
 
+        printf("La suppression a ete effectuee\n");
     }
-    else{
+    else
+    {
         printf("L'action a supprimer n'existe pas\n");
     }
 
     return Validation;
 }
+
+
+
+
 
 Listesem_t SuppressionSemaineEnTete(Listesem_t listesem)
 {
