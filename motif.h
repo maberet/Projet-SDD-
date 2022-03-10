@@ -3,7 +3,7 @@
 #include "semaine.h"
 #endif
 
-#define TAILLEMAX 300
+#define TAILLEMAX 300 									// Taille max de la liste contigue date. 
 
 /* -------------------------------Déclaration des structures.---------------------------------------*/
 
