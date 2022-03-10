@@ -57,5 +57,7 @@ int main(int argc, char ** argv)
         }
     }
 
+    LiberationSemaines(listesem);
+
     return 0;
 }
