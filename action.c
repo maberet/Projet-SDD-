@@ -171,7 +171,7 @@ Listeaction_t SuppressionActionEnTete(Listeaction_t listeact)
     MaillonAct_t *ActionTemp; // Maillon temporaire qui va permettre de supprimer la tête de liste 
     if(ListeActionVide(listeact)) // si la liste est vide on ne peut rien supprimer, c'est un cas d'erreur
     {
-        printf("Suppression d'une action sur une liste vide, operation interdite");
+        printf("Liste vide");
         exit(1);
     }
     ActionTemp = listeact; // recuperation de l'action en tête de liste
@@ -205,7 +205,6 @@ Listeaction_t SuppressionMaillonAction(Listeaction_t listeact, int jour, char* h
 
 void LiberationListeActions(Listeaction_t listeact)
 {
-
     while(!ListeActionVide(listeact))
     {
         listeact = SuppressionActionEnTete(listeact);
