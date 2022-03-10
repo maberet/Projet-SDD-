@@ -29,3 +29,7 @@ Listeaction_t InsertionEnTeteAction(Action_t, Listeaction_t);
 Listeaction_t InsertionAction(Action_t, Listeaction_t);
 void AfficherListeAction(Listeaction_t);
 void SauvegardeAction(FILE *, char *, Listeaction_t);
+Booleen_t RechercheAction(Listeaction_t listeact, int jour, char heure[]);
+Listeaction_t SuppressionActionEnTete(Listeaction_t listeact);
+Listeaction_t SuppressionMaillonAction(Listeaction_t listeact, int jour, char* heure);
+void LiberationListeActions(Listeaction_t listeact);

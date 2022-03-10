@@ -27,3 +27,8 @@ void AfficherListeSemaine(Listesem_t);
 Listesem_t InsertionDonnees(char *, Listesem_t);
 Semaine_t LectureDonnees(FILE *);
 void Sauvegarde(char *, Listesem_t);
+Booleen_t RechercheSemaineAction(Listesem_t listesem, char annee[], char sem[], int jour, char heure[]);
+Booleen_t SuppressionAction(Listesem_t listesem, char* annee, char* sem, int jour, char* heure);
+Listesem_t SuppressionSemaineEnTete(Listesem_t listesem);
+Listesem_t SuppressionMaillonSemaine(Listesem_t listesem, char* annee, char* sem);
+Listesem_t LiberationSemaines(Listesem_t listesem);
