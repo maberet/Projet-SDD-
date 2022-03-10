@@ -1,27 +1,27 @@
 #include"semaine.h"
 
-/* -------------------------------------------------------------------- */
-/* InitialisationSemaine: initialisation de la liste des années et      */
-/* des semaines.                                                        */
-/*                                                                      */
-/* En entrée: Aucune.                                                   */
-/*                                                                      */
-/* En sortie: Renvoie la liste vide.                                    */
-/* -------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------------------------- */
+/*                              InitialisationSemaine : Initialise la liste des semaines.                            */
+/*                                                                                                                   */
+/*                              En entrée : Aucune.                                                                  */
+/*                                                                                                                   */
+/*                              En sortie : Liste de semaines vide.                                                  */
+/* ----------------------------------------------------------------------------------------------------------------- */
 
-Listesem_t InitialisationSemaine (void){
+Listesem_t InitialisationSemaine (void)
+{
     return NULL;
 }
 
 
 
-/* -------------------------------------------------------------------- */
-/* ListeSemaineVide: vérifie si une liste est vide.                     */
-/*                                                                      */
-/* En entrée: Liste des semaines.                                       */
-/*                                                                      */
-/* En sortie: Renvoie 1 si la liste est vide sinon 0.                   */
-/* -------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------------------------- */
+/*                              ListeActionVide : Teste si la liste est vide ou non.                                 */
+/*                                                                                                                   */
+/*                              En entrée : Liste des semaines listesem.                                             */
+/*                                                                                                                   */
+/*                              En sortie : 1 si elle est vide, 0 sinon.                                             */
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 Booleen_t ListeSemaineVide(Listesem_t listesem)
 {
@@ -36,62 +36,62 @@ Booleen_t ListeSemaineVide(Listesem_t listesem)
 
 
 
-/* --------------------------------------------------------------------------------- */
-/* InsertionenteteSemaine: Insère la structure semaine en tête de la liste semaine.  */
-/*                                                                                   */
-/* En entrée: Structure semaine, Liste des semaines.                                 */
-/*                                                                                   */
-/* En sortie: Tête de la liste des semaines.                                         */
-/* --------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------------------------- */
+/*                              InsertionEnTeteSemaine : Insère en tête de liste la structure                        */
+/*                                            semaine en paramètre                                                   */
+/*                                                                                                                   */
+/*                              En entrée : Structure semaine Sem, Liste des semaines listesem.                      */
+/*                                                                                                                   */
+/*                              En sortie : Liste des semaines mise à jour.                                          */
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 Listesem_t InsertionenteteSem(Semaine_t Sem,Listesem_t Listesem)
 {
     Maillonsem_t *m;
-    m=(Maillonsem_t*)malloc(sizeof(Maillonsem_t));
-                                                                 /// question ? " Pas d'écritures de messages d'erreur dans les fonctions de base : la fonction retourne un indicateur ou
-                                                                 //  code d'erreur, que le programme appelant interprète et traite."
+    m=(Maillonsem_t*)malloc(sizeof(Maillonsem_t)); // on alloue un maillon.
+                                                            
     if (m==NULL)
     {
         printf("problème d'allocation \n");
         exit(1);
     }
-    m->semaine=Sem;
-    m->suiv= Listesem;
+    m->semaine=Sem; // on ajoute la semaine dans le maillon.
+    m->suiv= Listesem; // on fait pointer le suivant du maillon sur la liste.
 
     return m;
 }
 
 
 
-/* -------------------------------------------------------------------- */
-/* InsertionSemaine: Recherche recursive de l'adresse d'insertion et    */
-/* insertion.                                                           */
-/*                                                                      */
-/* En entrée: Adresse d'une liste.                                      */
-/*                                                                      */
-/* En sortie: Renvoie 1 si la liste est vide sinon 0.                   */
-/* -------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------------------------- */
+/*                              InsertionSemaine : Insère la structure semaine à la bonne                            */
+/*                                            place dans la liste.                                                   */
+/*                                                                                                                   */
+/*                              Entrée : Structure semaine sem, Liste des semaines listesem.                         */
+/*                                                                                                                   */
+/*                              Sortie : Liste des semaines listesem.                                                */
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 {
-    if (ListeSemaineVide(liste))
+    if (ListeSemaineVide(liste)) // si la liste est vide:
     {
-        return InsertionenteteSem(sem,liste);
+        return InsertionenteteSem(sem,liste); // on insère en tête.
     }
     else
     {
-        if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)>0)
+        if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)>0) // si la chaine anneesemaine du maillon à ajouter est plus petite que celle de la liste:
         {
-            return InsertionenteteSem(sem,liste);
+            return InsertionenteteSem(sem,liste); // on insère en tête.
         }
-        else if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)==0)
+        else if (strcmp((liste->semaine).anneesemaine,sem.anneesemaine)==0) // si la chaine jourheure du maillon à ajouter est égale que celle de la liste:
         {
-            (liste->semaine).act = InsertionAction((sem.act)->action,(liste->semaine).act);
+            (liste->semaine).act = InsertionAction((sem.act)->action,(liste->semaine).act); // on insère la structure action à la bonne place dans la semaine.
             return liste;
         }
         else
         {
-            liste->suiv = InsertionSemaine(sem,liste->suiv);
+            liste->suiv = InsertionSemaine(sem,liste->suiv); // sinon on passe au suivant.
         }
     }
     return liste;
@@ -99,16 +99,14 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 
 
 
-/* Le fichier existe exemple de chaine dans le fichier:202215108TPs de SDD */
 
-/* -------------------------------------------------------------------- */
-/* InsertionSemaine: Extraction des informations presente dans un       */
-/* fichier et insertion dans une la structure.                          */
-/*                                                                      */
-/* En entrée: Adresse d'une liste et fichier.                           */
-/*                                                                      */
-/* En sortie: Renvoie l'adresse de la liste remplie.                    */
-/* -------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------------------------- */
+/*                              AfficherListeSemaine : Affiche la liste des semaines                                 */
+/*                                                                                                                   */
+/*                              En enntrée : Liste des semaines listesem.                                            */
+/*                                                                                                                   */
+/*                              En sortie : aucune.                                                                  */
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 
 void AfficherListeSemaine(Listesem_t listesem)
@@ -124,21 +122,21 @@ void AfficherListeSemaine(Listesem_t listesem)
 
 
 
-/* -------------------------------------------------------------------------- */
-/* LectureDonnees: Ajoute les données du fichier dans la structure semaine.   */
-/*                                                                            */
-/* En entrée: File.                                                           */
-/*                                                                            */
-/* En sortie: Structure semaine                                               */
-/* -------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------------------------- */
+/*                              LectureDonnees: Ajoute les données du fichier dans la structure semaine.             */
+/*                                                                                                                   */
+/*                              En entrée: File.                                                                     */
+/*                                                                                                                   */
+/*                              En sortie: Structure semaine.                                                        */
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 Semaine_t LectureDonnees(FILE * file)
 {
     Action_t            act;
     Semaine_t           sem;
 
-    fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine, act.jourheure, act.action);
-    sem.act = InsertionAction(act,InitialisationAction());
+    fscanf(file,"%6s %3s %[^\n]%*c",sem.anneesemaine, act.jourheure, act.action); // on lit les données dans le fichier.
+    sem.act = InsertionAction(act,InitialisationAction()); // on insère dans la liste des actions.
 
     return sem;
 }
