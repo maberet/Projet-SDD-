@@ -121,7 +121,7 @@ void AfficherListeSemaine(Listesem_t listesem)
         listesem=listesem->suiv;
     }
 }
-// A faire !! 
+// A faire !!
 /* -------------------------------------------------------------------- */
 /* LibérationSemaine: Affiche la liste des années/semaine et appelle    */
 /* la fonction d'affichage des actions.                                 */
@@ -189,7 +189,7 @@ Listesem_t InsertionDonnees(char * fichier, Listesem_t listesem)
 
 
 void Sauvegarde(char * fichier, Listesem_t listesem)
-{   
+{
     FILE * file;
 
     file = fopen(fichier,"w");
@@ -219,7 +219,7 @@ Booleen_t RechercheSemaineAction(Listesem_t listesem, char annee[], char sem[], 
     strcat(anneesem,sem);
 
     while(listesem!=NULL)
-    {  
+    {
         if(strcmp((listesem->semaine).anneesemaine, anneesem) == 0) // si on trouve la semaine voulue
         {
             resultat = RechercheAction((listesem->semaine).act, jour, heure);
@@ -230,27 +230,21 @@ Booleen_t RechercheSemaineAction(Listesem_t listesem, char annee[], char sem[], 
 }
 
 Booleen_t SuppressionAction(Listesem_t listesem, char* annee, char* sem, int jour, char* heure)
-{   
+{
     Booleen_t       Validation = faux; // permet de savoir si l'action a été supprimée quand on parcours la liste
     char            anneesem[7];
 
     strcpy(anneesem,annee);
     strcat(anneesem,sem);
 
-    //printf("annesem: %s\n",anneesem);
-
     if(RechercheSemaineAction(listesem, annee, sem, jour, heure)) // si l'action existe dans la liste
-    {   //printf("avion\n");
+    {
         while(listesem!=NULL)
         {
             if(strcmp((listesem->semaine).anneesemaine, anneesem) == 0) // si on trouve la semaine voulue
             {
                 (listesem->semaine).act = SuppressionMaillonAction((listesem->semaine).act, jour, heure); // suppression de l'action dans la liste d'actions
                 Validation = ListeActionVide((listesem->semaine).act); // si la liste des actions est vide après suppression on notifie que l'on doit supprimer la semaine de la liste
-                /*if (Validation==1)
-                {
-                 listesem= SuppressionMaillonSemaine(listesem,annee,sem);
-                }*/
             }
             listesem = listesem->suiv;
         }
@@ -266,11 +260,11 @@ Booleen_t SuppressionAction(Listesem_t listesem, char* annee, char* sem, int jou
 
 Listesem_t SuppressionSemaineEnTete(Listesem_t listesem)
 {
-    Maillonsem_t        * SemTemp; // Maillon temporaire qui va permettre de supprimer la tête de liste 
-    
+    Maillonsem_t        * SemTemp; // Maillon temporaire qui va permettre de supprimer la tête de liste
+
     if(ListeSemaineVide(listesem)) // si la liste est vide on ne peut rien supprimer, c'est un cas d'erreur
     {
-        printf("Suppression d'une semaine sur une liste vide, operation interdite");
+        printf("Liste vide");
         exit(1);
     }
     SemTemp = listesem; // recuperation de la semaine en tête de liste
@@ -280,7 +274,7 @@ Listesem_t SuppressionSemaineEnTete(Listesem_t listesem)
 }
 
 Listesem_t SuppressionMaillonSemaine(Listesem_t listesem, char* annee, char* sem)
-{   
+{
     Semaine_t       Temp;
     char            anneesem[7];
 
@@ -302,7 +296,6 @@ Listesem_t SuppressionMaillonSemaine(Listesem_t listesem, char* annee, char* sem
 
 Listesem_t LiberationSemaines(Listesem_t listesem)
 {
-
     while(!ListeSemaineVide(listesem))
     {
         LiberationListeActions((listesem->semaine).act);

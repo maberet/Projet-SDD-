@@ -28,8 +28,6 @@ Booleen_t ListeActionVide(Listeaction_t);
 Listeaction_t InsertionEnTeteAction(Action_t, Listeaction_t);
 Listeaction_t InsertionAction(Action_t, Listeaction_t);
 void AfficherListeAction(Listeaction_t);
-// Listeaction_t SuppressionAction( Listeaction_t);
-// void LiberationListeAction (Listeaction_t);
 void SauvegardeAction(FILE *, char *, Listeaction_t);
 Booleen_t RechercheAction(Listeaction_t, int, char[]);
 Listeaction_t SuppressionActionEnTete(Listeaction_t );
