@@ -121,7 +121,7 @@ void AfficherListeSemaine(Listesem_t listesem)
         listesem=listesem->suiv;
     }
 }
-// A faire !! 
+// A faire !!
 /* -------------------------------------------------------------------- */
 /* LibérationSemaine: Affiche la liste des années/semaine et appelle    */
 /* la fonction d'affichage des actions.                                 */
@@ -189,7 +189,7 @@ Listesem_t InsertionDonnees(char * fichier, Listesem_t listesem)
 
 
 void Sauvegarde(char * fichier, Listesem_t listesem)
-{   
+{
     FILE * file;
 
     file = fopen(fichier,"w");
@@ -219,7 +219,7 @@ Booleen_t RechercheSemaineAction(Listesem_t listesem, char annee[], char sem[], 
     strcat(anneesem,sem);
 
     while(listesem!=NULL)
-    {  
+    {
         if(strcmp((listesem->semaine).anneesemaine, anneesem) == 0) // si on trouve la semaine voulue
         {
             resultat = RechercheAction((listesem->semaine).act, jour, heure);
@@ -230,7 +230,7 @@ Booleen_t RechercheSemaineAction(Listesem_t listesem, char annee[], char sem[], 
 }
 
 Booleen_t SuppressionAction(Listesem_t listesem, char* annee, char* sem, int jour, char* heure)
-{   
+{
     Booleen_t       Validation = faux; // permet de savoir si l'action a été supprimée quand on parcours la liste
     char            anneesem[7];
 
@@ -260,8 +260,8 @@ Booleen_t SuppressionAction(Listesem_t listesem, char* annee, char* sem, int jou
 
 Listesem_t SuppressionSemaineEnTete(Listesem_t listesem)
 {
-    Maillonsem_t        * SemTemp; // Maillon temporaire qui va permettre de supprimer la tête de liste 
-    
+    Maillonsem_t        * SemTemp; // Maillon temporaire qui va permettre de supprimer la tête de liste
+
     if(ListeSemaineVide(listesem)) // si la liste est vide on ne peut rien supprimer, c'est un cas d'erreur
     {
         printf("Liste vide");
@@ -274,7 +274,7 @@ Listesem_t SuppressionSemaineEnTete(Listesem_t listesem)
 }
 
 Listesem_t SuppressionMaillonSemaine(Listesem_t listesem, char* annee, char* sem)
-{   
+{
     Semaine_t       Temp;
     char            anneesem[7];
 

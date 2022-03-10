@@ -63,7 +63,7 @@ int main(int argc, char ** argv)
                         if (b)                                                          // Supprime la semaine si elle ne contient plus d'action. 
                         {
                             listesem=SuppressionMaillonSemaine(listesem, annee, semaine);
-                        } 
+                        }
                         break;
 
                 case 5: sortie = vrai; break;                                           // Sortie du programme. 
@@ -76,7 +76,7 @@ int main(int argc, char ** argv)
 
         printf("Choisissez une action : \n");
         printf("1 - Afficher la liste des semaines\n2 - Sauvegarder dans un fichier\n3 - Afficher la liste des semaines contenant un motif\n4 - Supprimer une action\n5 - Sortie\n");
-    
+
     }
 
     LiberationSemaines(listesem);                                               // Libération de la liste semaine. 
