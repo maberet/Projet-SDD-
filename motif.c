@@ -2,22 +2,25 @@
 
 int Motif(char * motif, Listesem_t listesem, Date_t date[], Date_t * findate)
 {
-	int i = 0;
+	int 	      i = 0;
+	Listeaction_t temp;
 
 	while (!ListeSemaineVide(listesem) && (&date[i] != findate))
 	{
-		while((!ListeActionVide((listesem->semaine).act))  && (&date[i] != findate))
+		temp = (listesem->semaine).act;
+
+		while(!ListeActionVide(temp) && (&date[i] != findate))
 		{
-			if(strstr((((listesem->semaine).act)->action).action,motif) != NULL)
+			if(strstr((temp->action).action,motif) != NULL)
 			{
 				strcpy(date[i].anneesemaine,(listesem->semaine).anneesemaine);
-				strcpy(date[i].jourheure,(((listesem->semaine).act)->action).jourheure);
-				strcpy(date[i].action,(((listesem->semaine).act)->action).action);	
+				strcpy(date[i].jourheure,((temp->action).jourheure));
+				strcpy(date[i].action,((temp->action).action));	
 
 				i++;
 			}
 
-			(listesem->semaine).act = ((listesem->semaine).act)->suiv;
+			temp = temp->suiv;
 		}
 
 		listesem = listesem->suiv;
