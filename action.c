@@ -10,7 +10,7 @@
 
 Listeaction_t InitialisationAction (void)
 {
-    return NULL;
+    return NULL;// met la valeur a NULL
 }
 
 

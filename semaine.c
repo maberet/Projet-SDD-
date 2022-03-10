@@ -100,14 +100,14 @@ Listesem_t InsertionSemaine (Semaine_t sem,Listesem_t liste)
 
 
 
-/* -------------------------------------------------------------------- */
-/* AfficherListeSemaine: Affiche la liste des années/semaine et appelle */
-/* la fonction d'affichage des actions.                                 */
-/*                                                                      */
-/* En entrée: Adresse d'une liste et fichier.                           */
-/*                                                                      */
-/* En sortie: Renvoie l'adresse de la liste remplie.                    */
-/* -------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------*/
+/*                  AfficherListeSemaine: Affiche la liste des années/semaine et appelle            */
+/*la fonction d'affichage des actions.                                                              */
+/*                                                                                                  */
+/*                  En entrée: Adresse d'une liste et fichier.                                      */
+/*                                                                                                  */
+/*                  En sortie: Renvoie l'adresse de la liste remplie.                               */
+/* ------------------------------------------------------------------------------------------------ */
 
 
 void AfficherListeSemaine(Listesem_t listesem)

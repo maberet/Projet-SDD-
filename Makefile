@@ -7,7 +7,7 @@ all:$(EXEC)
 
 agenda: main.o motif.o semaine.o action.o
 	$(CC) -o $@ $^ $(LDFLAGS)
-	@echo "Lancer le programme avec ./agenda action.txt sauvegarde.txt motifàchercher"
+	@echo "Lancer le programme avec ./agenda action.txt"
 
 action.o : action.c action.h 
 	$(CC) -o $@ -c $< $(CFLAGS)
